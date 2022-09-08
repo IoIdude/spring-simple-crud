@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        .table {
+            width: 100%;
+            border: none;
+            margin-bottom: 20px;
+        }
+        th {
+            color: #d8d8d8;
+        }
+        td {
+            color: white;
+        }
+        .table thead th {
+            font-weight: bold;
+            text-align: center;
+            border: none;
+            padding: 10px 15px;
+            background: #d8d8d8;
+            font-size: 14px;
+        }
+        .table thead tr th:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+        .table thead tr th:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+        .table tbody td {
+            font-weight: bold;
+            text-align: center;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            vertical-align: top;
+        }
+        .table tbody tr:nth-child(even){
+            background: #f3f3f3;
+        }
+        .table tbody tr td:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+        .table tbody tr td:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+
+         a:link, a:visited {
+             background-color: white;
+             color: #d8d8d8;
+             border: 2px solid #d8d8d8;
+             border-radius: 20px;
+             padding: 10px 20px;
+             text-align: center;
+             text-decoration: none;
+             display: inline-block;
+         }
+
+        a:hover, a:active {
+            background-color: #d8d8d8;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<a href="/">Назад</a>
+<br>
+<br>
+<table class="table">
+    <tr>
+        <th>№</th>
+        <th>Ник</th>
+        <th>Возраст</th>
+        <th>Обо мне</th>
+        <th>Гит</th>
+        <th>Часы работы</th>
+    </tr>
+    <tr>
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.nick}"></td>
+        <td th:text="${user.age}"></td>
+        <td th:text="${user.aboutMe}"></td>
+        <td th:text="${user.git}"></td>
+        <td th:text="${user.workHours}"></td>
+    </tr>
+</table>
+</body>
+</html>

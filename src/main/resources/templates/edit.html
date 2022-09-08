@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="/">Назад</a>
+<br>
+<form action="/edit" method="post">
+    <input type="hidden" name="id" th:value="${user.id}">
+    <label for="nick">Ник</label>
+    <input type="text" name="nick" id="nick" th:value="${user.nick}" required>
+    <label for="age">Возраст</label>
+    <input type="number" name="age" id="age" th:value="${user.age}" required>
+    <label for="aboutMe">Обо мне</label>
+    <input type="text" name="aboutMe" id="aboutMe" th:value="${user.aboutMe}" required>
+    <label for="git">Гит</label>
+    <input type="text" name="git" id="git" th:value="${user.git}" required>
+    <label for="workHours">Часы работы</label>
+    <input type="number" name="workHours" id="workHours" th:value="${user.workHours}" required>
+    <input type="submit" value="Изменить">
+</form>
+</body>
+</html>
