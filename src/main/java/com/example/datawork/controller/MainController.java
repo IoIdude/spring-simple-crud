@@ -1,19 +1,12 @@
 package com.example.datawork.controller;
 
 import com.example.datawork.entity.UserEntity;
-import com.example.datawork.repo.UserRepo;
 import com.example.datawork.service.UserService;
-import com.example.datawork.service.UserServiceImp;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Controller

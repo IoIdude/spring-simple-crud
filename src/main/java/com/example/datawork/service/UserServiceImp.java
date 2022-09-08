@@ -6,13 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
-public class UserServiceImp implements UserService{
+public class UserServiceImp implements UserService {
     @Autowired
     private UserRepo repository;
 
@@ -47,6 +45,11 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
+    public List<UserEntity> getUsersByFilterUse(String tag) {
+        return repository.findByNickOrGitOrAboutMe(tag, tag, tag);
+    }
+
+    @Override
     public List<UserEntity> getUsersLikeByFilterUse(String tag) {
         return repository.findByNickContainingOrGitContainingOrAboutMeContaining(tag, tag, tag);
     }
@@ -54,10 +57,5 @@ public class UserServiceImp implements UserService{
     @Override
     public List<UserEntity> getUsersLikeByFilterUse(Integer tag) {
         return repository.findByAgeGreaterThanEqualOrWorkHoursGreaterThanEqualOrIdGreaterThanEqual(tag, tag, tag);
-    }
-
-    @Override
-    public List<UserEntity> getUsersByFilterUse(String tag) {
-        return repository.findByNickOrGitOrAboutMe(tag, tag, tag);
     }
 }
