@@ -5,8 +5,11 @@ import com.example.datawork.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -15,24 +18,54 @@ public class MainController {
     private UserService service;
 
     @GetMapping("/")
-    public String Start(Model model) {
+    public String Start(UserEntity user) {
+        return "reg";
+    }
+
+    @PostMapping("/reg")
+    public String Add(@Valid UserEntity user, BindingResult result, Model model) {
+        if (!result.hasErrors()) {
+            if (service.getUserByNick(user.getNick()) == null) {
+                user.setRoles(new ArrayList<>());
+
+                service.addUser(user);
+                service.addRoleToUser(user.getNick(), "USER");
+
+                return "redirect:/login";
+            }
+            else {
+                model.addAttribute("userExist", true);
+            }
+        }
+
+        return "reg";
+    }
+
+    @GetMapping("/main")
+    public String preview(Model model) {
         List<UserEntity> users = service.getUsers();
         model.addAttribute("users", users);
 
-        return "create";
+        return "main";
     }
 
     @GetMapping(value = "/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, Model model) {
-        UserEntity user = service.getUser(id);
-        model.addAttribute("user", user);
+    public String edit(@PathVariable("id") Integer id, UserEntity user, Model model) {
+        UserEntity user_info = service.getUser(id);
+        model.addAttribute("user", user_info);
         return "edit";
     }
 
     @PostMapping(value = "/edit")
-    public String edit(@ModelAttribute("user") UserEntity user) {
-        service.editUser(user);
-        return "redirect:/";
+    public String edit(@Valid UserEntity user, BindingResult result, Model model) {
+        if (!result.hasErrors()) {
+            service.editUser(user);
+            return "redirect:/main";
+        }
+
+        model.addAttribute("user", user);
+
+        return "edit";
     }
 
     @GetMapping(value = "/details/{id}")
@@ -45,20 +78,10 @@ public class MainController {
     @GetMapping(value = "/delete/{id}")
     public String delete(@PathVariable("id") Integer id) {
         service.deleteUser(id);
-        return "redirect:/";
+        return "redirect:/main";
     }
 
-    @PostMapping("/")
-    public String Add(@ModelAttribute("user") UserEntity user, Model model) {
-        service.addUser(user);
-
-        List<UserEntity> users = service.getUsers();
-        model.addAttribute("users", users);
-
-        return "create";
-    }
-
-    @PostMapping("filterExact")
+    @GetMapping("filterExact")
     public String FilterExact(@RequestParam(value = "filter", required = false) String filter, Model model) {
         List<UserEntity> users;
 
@@ -75,10 +98,10 @@ public class MainController {
         }
         model.addAttribute("users", users);
 
-        return "create";
+        return "main";
     }
 
-    @PostMapping("filterInaccurate")
+    @GetMapping("filterInaccurate")
     public String FilterInaccurate(@RequestParam(value = "filter", required = false) String filter, Model model) {
         List<UserEntity> users;
 
@@ -95,6 +118,6 @@ public class MainController {
         }
         model.addAttribute("users", users);
 
-        return "create";
+        return "main";
     }
 }

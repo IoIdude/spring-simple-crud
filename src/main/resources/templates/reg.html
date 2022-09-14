@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="/login">Войти</a>
+<br>
+<form method="post" action="/reg" th:object="${userEntity}">
+    <label for="nick">Ник</label>
+    <input type="text" th:field="*{nick}" id="nick" required>
+    <div th:if="${#fields.hasErrors('nick')}" th:errors="*{nick}">Nick-Error</div>
+    <label for="password">Пароль</label>
+    <input type="text" th:field="*{password}" id="password" required>
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Nick-Error</div>
+    <label for="age">Возраст</label>
+    <input type="number" th:field="*{age}" id="age" required>
+    <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Nick-Error</div>
+    <label for="aboutMe">Обо мне</label>
+    <input type="text" th:field="*{aboutMe}" id="aboutMe" required>
+    <div th:if="${#fields.hasErrors('aboutMe')}" th:errors="*{aboutMe}">Nick-Error</div>
+    <label for="git">Гит</label>
+    <input type="text" th:field="*{git}" id="git" required>
+    <div th:if="${#fields.hasErrors('git')}" th:errors="*{git}">Nick-Error</div>
+    <label for="workHours">Часы работы</label>
+    <input type="number" th:field="*{workHours}" id="workHours" required>
+    <div th:if="${#fields.hasErrors('workHours')}" th:errors="*{workHours}">Nick-Error</div>
+    <input type="submit" value="Отправить">
+    <div th:if="${userExist}">Такой пользователь существует</div>
+</form>
+</body>
+</html>

@@ -13,4 +13,6 @@ public interface UserRepo extends JpaRepository<UserEntity, Integer> {
 
     List<UserEntity> findByAgeGreaterThanEqualOrWorkHoursGreaterThanEqualOrIdGreaterThanEqual(Integer age, Integer work_hours, Integer number);
     List<UserEntity> findByNickContainingOrGitContainingOrAboutMeContaining(String nick, String git, String about_me);
+
+    UserEntity findByNick(String username);
 }

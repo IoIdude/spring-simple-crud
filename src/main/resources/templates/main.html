@@ -2,33 +2,21 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create</title>
 </head>
 <body>
-    <form method="post" action="/">
-    <!--    <input type="hidden" name="id" value="null">-->
-        <label for="nick">Ник</label>
-        <input type="text" name="nick" id="nick" required>
-        <label for="age">Возраст</label>
-        <input type="number" name="age" id="age" required>
-        <label for="aboutMe">Обо мне</label>
-        <input type="text" name="aboutMe" id="aboutMe" required>
-        <label for="git">Гит</label>
-        <input type="text" name="git" id="git" required>
-        <label for="workHours">Часы работы</label>
-        <input type="number" name="workHours" id="workHours" required>
-        <input type="submit" value="Отправить">
-    </form>
-    <br>
-    <br>
-    <form method="post" action="filterExact">
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<br>
+    <form method="get" action="filterExact">
         <label>
             <input type="text" name="filter">
         </label>
         <button type="submit">Найти</button>
     </form>
     <br>
-    <form method="post" action="filterInaccurate">
+    <form method="get" action="filterInaccurate">
         <label>
             <input type="text" name="filter">
         </label>
