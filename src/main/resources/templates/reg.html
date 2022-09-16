@@ -26,8 +26,19 @@
     <label for="workHours">Часы работы</label>
     <input type="number" th:field="*{workHours}" id="workHours" required>
     <div th:if="${#fields.hasErrors('workHours')}" th:errors="*{workHours}">Nick-Error</div>
+    <label for="workHours">Город</label>
+    <select  name="countryName">
+        <div th:each="element : ${country}">
+            <option th:text="${element.countryName}"></option>
+        </div>
+    </select>
     <input type="submit" value="Отправить">
-    <div th:if="${userExist}">Такой пользователь существует</div>
+    <select  name="number">
+        <div th:each="element : ${book}">
+            <option th:text="${element.number}"></option>
+        </div>
+    </select>
+    <div th:if="${userExist}">Пользлватель с таким именем уже существует, либо номер трудовой книжки уже занят</div>
 </form>
 </body>
 </html>

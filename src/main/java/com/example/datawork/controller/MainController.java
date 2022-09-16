@@ -1,6 +1,8 @@
 package com.example.datawork.controller;
 
+import com.example.datawork.entity.Country;
 import com.example.datawork.entity.UserEntity;
+import com.example.datawork.entity.WorkBook;
 import com.example.datawork.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -18,15 +21,22 @@ public class MainController {
     private UserService service;
 
     @GetMapping("/")
-    public String Start(UserEntity user) {
+    public String Start(UserEntity user, Model model) {
+        Collection<Country> countries = service.allCountries();
+        Collection<WorkBook> workBooks = service.allWorkBooks();
+        model.addAttribute("country", countries);
+        model.addAttribute("book", workBooks);
         return "reg";
     }
 
     @PostMapping("/reg")
-    public String Add(@Valid UserEntity user, BindingResult result, Model model) {
+    public String Add(@Valid UserEntity user, BindingResult result, @ModelAttribute("country") Country country, @ModelAttribute("book") WorkBook workBook, Model model) {
         if (!result.hasErrors()) {
-            if (service.getUserByNick(user.getNick()) == null) {
+            WorkBook book = service.findWorkBook(workBook.getNumber());
+            if (service.getUserByNick(user.getNick()) == null && service.getUserByWorkBook(book) == null) {
                 user.setRoles(new ArrayList<>());
+                user.setCountry(service.findCountry(country.getCountryName()));
+                user.setWorkBook(book);
 
                 service.addUser(user);
                 service.addRoleToUser(user.getNick(), "USER");
@@ -34,6 +44,10 @@ public class MainController {
                 return "redirect:/login";
             }
             else {
+                Collection<Country> countries = service.allCountries();
+                Collection<WorkBook> workBooks = service.allWorkBooks();
+                model.addAttribute("country", countries);
+                model.addAttribute("book", workBooks);
                 model.addAttribute("userExist", true);
             }
         }

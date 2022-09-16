@@ -47,4 +47,9 @@ public class UserEntity {
     private Integer workHours;
     @ManyToMany(fetch = EAGER)
     private Collection<Role> roles = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "work_book_id")
+    private WorkBook workBook;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Country country;
 }

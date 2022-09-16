@@ -1,9 +1,13 @@
 package com.example.datawork.service;
 
+import com.example.datawork.entity.Country;
 import com.example.datawork.entity.Role;
 import com.example.datawork.entity.UserEntity;
+import com.example.datawork.entity.WorkBook;
+import com.example.datawork.repo.CountryRepo;
 import com.example.datawork.repo.RoleRepository;
 import com.example.datawork.repo.UserRepo;
+import com.example.datawork.repo.WorkBookRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +27,10 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
+    private WorkBookRepo workBookRepository;
+    @Autowired
+    private CountryRepo countryRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepo repository;
@@ -30,6 +38,36 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     public Role addRole(Role role) {
         return roleRepository.save(role);
+    }
+
+    @Override
+    public Country addCountry(Country country) {
+        return countryRepository.save(country);
+    }
+
+    @Override
+    public Country findCountry(String countryName) {
+        return countryRepository.findByCountryName(countryName);
+    }
+
+    @Override
+    public Collection<Country> allCountries() {
+        return countryRepository.findAll();
+    }
+
+    @Override
+    public WorkBook addWorkBook(WorkBook workBook) {
+        return workBookRepository.save(workBook);
+    }
+
+    @Override
+    public WorkBook findWorkBook(String number) {
+        return workBookRepository.findByNumber(number);
+    }
+
+    @Override
+    public Collection<WorkBook> allWorkBooks() {
+        return workBookRepository.findAll();
     }
 
     @Override
@@ -54,6 +92,11 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     public UserEntity getUser(Integer id) {
         return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public UserEntity getUserByWorkBook(WorkBook book) {
+        return repository.findByWorkBook(book);
     }
 
     @Override
